@@ -1,0 +1,18 @@
+#ifndef FLASH_LOG_HH
+#define FLASH_LOG_HH
+
+#include "soil/Log.hh"
+
+#define FLASH_LOG_INIT(x) SOIL_LOG_INIT(x)
+
+#define FLASH_TRACE SOIL_TRACE
+#define FLASH_DEBUG SOIL_DEBUG
+#define FLASH_INFO  SOIL_INFO
+#define FLASH_WARNING SOIL_WARNING
+#define FLASH_ERROR SOIL_ERROR
+#define FLASH_FATAL SOIL_FATAL
+#define FLASH_PDU SOIL_PDU
+#define FLASH_CUSTOM SOIL_CUSTOM
+
+
+#endif
