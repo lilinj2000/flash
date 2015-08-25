@@ -56,40 +56,6 @@ BOOST_LIBADD="$BOOST_HOME/lib/libboost_log_setup.so \
 AC_SUBST(BOOST_CPPFLAGS)
 AC_SUBST(BOOST_LIBADD)
 
-dnl FEMAAPI lib
-
-FEMA_V1_21_HOME=$home_3rd/FemasAPI_V1.21_20140806
-FEMA_V1_01_HOME=$home_3rd/FemasAPI_V1.01
-FEMA_V1_01_MULTI_HOME=$home_3rd/Femas_V1.01.00_Multi_API
-FEMA_HOME=$FEMA_V1_01_MULTI_HOME
-FEMA_VER=FEMA_V1_01_MULTI
-
-AC_ARG_WITH([fema-include],
-    [AS_HELP_STRING([--with-fema-include],
-        [include path of the fema api, defaults to $FEMA_HOME/include])],
-    [FEMA_INCLUDE_PATH="$withval"],
-    [FEMA_INCLUDE_PATH="$FEMA_HOME/include"])
-AC_SUBST([FEMA_INCLUDE_PATH])
-
-AC_ARG_WITH([fema-lib],
-    [AS_HELP_STRING([--with-fema-lib],
-        [lib path of the fema api, defaults to $FEMA_HOME/lnx64])],
-    [FEMA_LIB_PATH="$withval"],
-    [FEMA_LIB_PATH="$FEMA_HOME/lnx64"])
-AC_SUBST([FEMA_LIB_PATH])
-
-AC_ARG_WITH([fema-ver],
-    [AS_HELP_STRING([--with-fema-ver],
-        [version of the fema api, defaults to $FEMA_VER])],
-    [FEMA_VER="$withval"],
-    [FEMA_VER="$FEMA_VER"])
-AC_SUBST([FEMA_VER])
-
-FEMA_CPPFLAGS="-I$FEMA_INCLUDE_PATH -D$FEMA_VER"
-FEMA_LIBADD="-L$FEMA_LIB_PATH -lUSTPtraderapi -lUSTPmduserapi"
-AC_SUBST(FEMA_CPPFLAGS)
-AC_SUBST(FEMA_LIBADD)
-
 dnl soil lib
 AC_ARG_WITH([soil],
     [AS_HELP_STRING([--with-soil],
@@ -104,17 +70,41 @@ AC_SUBST(SOIL_CPPFLAGS)
 AC_SUBST(SOIL_LIBADD)
 
 dnl es-fema lib
-ES_FEMA_HOME=$home_es/fema-v1_01_multi
+ES_FEMA_HOME=$home_es/fema-v1_01
+AC_ARG_WITH([es-fema],
+    [AS_HELP_STRING([--with-es-fema],
+        [home path of the es-fema, defaults to $ES_FEMA_HOME])],
+    [ES_FEMA_HOME="$withval"],
+    [ES_FEMA_HOME="$ES_FEMA_HOME"])
+AC_SUBST([ES_FEMA_HOME])
+
 ES_FEMA_CPPFLAGS="-I$ES_FEMA_HOME/include"
 ES_FEMA_LIBADD="$ES_FEMA_HOME/lib/libfema.la"
 AC_SUBST(ES_FEMA_CPPFLAGS)
 AC_SUBST(ES_FEMA_LIBADD)
 
+AC_ARG_ENABLE([multi],
+    [AS_HELP_STRING([--enable-multi],
+        [enable multi support, @<:@default=no@:>@])],
+    [case "${enableval}" in
+      yes) multi=true ;;
+      no)  multi=false ;;
+       *) AC_MSG_ERROR([bad value ${enableval} for --enable-multi]) ;;
+    esac],
+    [multi=false])
+AM_CONDITIONAL([MULTI], [test x$multi = xtrue])
+
+
 
 AC_OUTPUT([
 	Makefile
-	src/Makefile
-	src/mdflow/Makefile])
+	util/Makefile
+	tcp/Makefile
+	tcp/mdflow/Makefile
+	multi/Makefile
+	multi/mdflow/Makefile])
+
+
 
 
 

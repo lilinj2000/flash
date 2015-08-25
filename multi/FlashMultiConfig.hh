@@ -1,5 +1,5 @@
-#ifndef FLASH_CONFIG_HH
-#define FLASH_CONFIG_HH
+#ifndef FLASH_MULTI_CONFIG_HH
+#define FLASH_MULTI_CONFIG_HH
 
 #include <string>
 #include <memory>
@@ -10,18 +10,17 @@ namespace flash
 
 namespace po = boost::program_options;
 
-class FlashOptions : public soil::Options
+class FlashMultiOptions : public soil::Options
 {
  public:
 
-  FlashOptions();
+  FlashMultiOptions();
   
-  virtual ~FlashOptions();
+  virtual ~FlashMultiOptions();
 
   virtual po::options_description* configOptions();
 
   std::string instrument_id;
-  std::string tcp_md_file;
   std::string multi_md_file;
   std::string log_cfg;
 
@@ -36,14 +35,9 @@ class FlashConfig
   FlashConfig(int argc=0, char* argv[]=NULL);
   ~FlashConfig();
 
-  FlashOptions* flashOptions()
+  FlashMultiOptions* flashMultiOptions()
   {
-    return flash_options_.get();
-  }
-
-  soil::Options* femaMDOptions()
-  {
-    return fema_md_options_.get();
+    return flash_multi_options_.get();
   }
 
   soil::Options* femaMultiMDOptions()
@@ -52,11 +46,10 @@ class FlashConfig
   }
 
  private:
-  std::auto_ptr<FlashOptions> flash_options_;
+  std::auto_ptr<FlashMultiOptions> flash_multi_options_;
   
-  std::auto_ptr<soil::Options> fema_md_options_;
+  std::auto_ptr<soil::Options> fema_multimd_options_;  
 
-  std::auto_ptr<soil::Options> fema_multimd_options_;
 };
 
 }  

@@ -1,0 +1,27 @@
+[flash]
+# investor_id=03127
+# investor_id = 04452
+instrument_id=IF1509
+
+multi_md_file=multi_md.data
+
+log_cfg=multi_log.cfg
+
+[fema_multimd]
+flow_path = ./mdflow/
+# sx
+multi_address = multi://172.31.77@224.1.1.25:7230
+multi_address = multi://172.31.77@224.1.1.26:7230
+# mobile
+# multi_address = multi://172.31.100@224.1.1.25:7230
+# multi_address = multi://172.31.100@224.1.1.26:7230
+
+
+
+
+
+
+
+
+
+

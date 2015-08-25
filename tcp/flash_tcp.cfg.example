@@ -1,0 +1,25 @@
+[flash]
+# investor_id=03127
+# investor_id = 04452
+instrument_id=IF1509
+
+tcp_md_file=tcp_md.data
+
+log_cfg=log.cfg
+
+[fema_md]
+flow_path = ./mdflow/
+front_address = tcp://180.169.101.189:7101
+broker_id = 0158
+# user_id = 03127
+# password = 111111
+user_id = 04452
+password = 111111
+
+
+
+
+
+
+
+

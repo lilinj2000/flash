@@ -1,7 +1,6 @@
-#include "FlashConfig.hh"
-#include "FlashLog.hh"
+#include "FlashTCPConfig.hh"
+#include "util/FlashLog.hh"
 #include "fema/MDService.hh"
-#include "fema/MultiMDService.hh"
 
 #include <fstream>
 #include <iostream>
@@ -10,8 +9,8 @@
 namespace flash
 {
 
-FlashOptions::FlashOptions():
-    config_options_("FlashConfigOptions")
+FlashTCPOptions::FlashTCPOptions():
+    config_options_("FlashTCPConfigOptions")
 {
 
   namespace po = boost::program_options;
@@ -21,8 +20,6 @@ FlashOptions::FlashOptions():
        "instrument id")
       ("flash.tcp_md_file", po::value<std::string>(&tcp_md_file), 
        "tcp md file")
-      ("flash.multi_md_file", po::value<std::string>(&multi_md_file), 
-       "multi md file")
 
       ("flash.log_cfg", po::value<std::string>(&log_cfg), 
        "log config file")
@@ -32,31 +29,29 @@ FlashOptions::FlashOptions():
   
 }
 
-FlashOptions::~FlashOptions()
+FlashTCPOptions::~FlashTCPOptions()
 {
 }
 
-po::options_description* FlashOptions::configOptions()
+po::options_description* FlashTCPOptions::configOptions()
 {
   return &config_options_;
 }
 
 FlashConfig::FlashConfig(int argc, char* argv[])
 {
-  flash_options_.reset(new FlashOptions());
+  flash_tcp_options_.reset(new FlashTCPOptions());
   fema_md_options_.reset( fema::MDService::createOptions() );
-  fema_multimd_options_.reset( fema::MultiMDService::createOptions() );
       
   std::auto_ptr<soil::Config> config( soil::Config::create() );
-  config->registerOptions( flash_options_.get() );
+  config->registerOptions( flash_tcp_options_.get() );
   config->registerOptions( fema_md_options_.get() );
-  config->registerOptions( fema_multimd_options_.get() );
 
-  config->configFile() = "flash.cfg";
+  config->configFile() = "flash_tcp.cfg";
   config->loadConfig(argc, argv);
   
   // init the log
-  FLASH_LOG_INIT( flash_options_->log_cfg );
+  FLASH_LOG_INIT( flash_tcp_options_->log_cfg );
   
   return;
 }

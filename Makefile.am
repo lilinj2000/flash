@@ -1,3 +1,8 @@
 AUTOMAKE_OPTIONS = foreign
 
-SUBDIRS = src
+SUBDIRS = util tcp
+
+if MULTI
+  SUBDIRS += multi
+endif
+

@@ -1,6 +1,6 @@
 #include "MultiMDServer.hh"
-#include "FlashLog.hh"
-#include "MData.hh"
+#include "util/FlashLog.hh"
+#include "util/MData.hh"
 
 namespace flash
 {

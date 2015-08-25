@@ -80,8 +80,8 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-bin_PROGRAMS = flash$(EXEEXT)
-subdir = src
+bin_PROGRAMS = flash_tcp$(EXEEXT)
+subdir = tcp
 DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
 	$(top_srcdir)/depcomp $(noinst_HEADERS)
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -91,23 +91,21 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
-am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(flashdir)"
+am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(flash_tcpdir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_flash_OBJECTS = flash-FlashConfig.$(OBJEXT) \
-	flash-MDServer.$(OBJEXT) flash-MultiMDServer.$(OBJEXT) \
-	flash-FlashServer.$(OBJEXT) flash-MData.$(OBJEXT) \
-	flash-Main.$(OBJEXT)
-flash_OBJECTS = $(am_flash_OBJECTS)
+am_flash_tcp_OBJECTS = flash_tcp-FlashTCPConfig.$(OBJEXT) \
+	flash_tcp-MDServer.$(OBJEXT) flash_tcp-Main.$(OBJEXT)
+flash_tcp_OBJECTS = $(am_flash_tcp_OBJECTS)
 am__DEPENDENCIES_1 =
-flash_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
-	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
+flash_tcp_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1) ../util/libflash.la
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
 am__v_lt_1 = 
-flash_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
+flash_tcp_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
-	$(CXXFLAGS) $(flash_LDFLAGS) $(LDFLAGS) -o $@
+	$(CXXFLAGS) $(flash_tcp_LDFLAGS) $(LDFLAGS) -o $@
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -142,8 +140,8 @@ AM_V_CXXLD = $(am__v_CXXLD_@AM_V@)
 am__v_CXXLD_ = $(am__v_CXXLD_@AM_DEFAULT_V@)
 am__v_CXXLD_0 = @echo "  CXXLD   " $@;
 am__v_CXXLD_1 = 
-SOURCES = $(flash_SOURCES)
-DIST_SOURCES = $(flash_SOURCES)
+SOURCES = $(flash_tcp_SOURCES)
+DIST_SOURCES = $(flash_tcp_SOURCES)
 RECURSIVE_TARGETS = all-recursive check-recursive cscopelist-recursive \
 	ctags-recursive dvi-recursive html-recursive info-recursive \
 	install-data-recursive install-dvi-recursive \
@@ -184,7 +182,7 @@ am__uninstall_files_from_dir = { \
     || { echo " ( cd '$$dir' && rm -f" $$files ")"; \
          $(am__cd) "$$dir" && rm -f $$files; }; \
   }
-DATA = $(flash_DATA)
+DATA = $(flash_tcp_DATA)
 HEADERS = $(noinst_HEADERS)
 RECURSIVE_CLEAN_TARGETS = mostlyclean-recursive clean-recursive	\
   distclean-recursive maintainer-clean-recursive
@@ -271,13 +269,9 @@ ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
 EGREP = @EGREP@
 ES_FEMA_CPPFLAGS = @ES_FEMA_CPPFLAGS@
+ES_FEMA_HOME = @ES_FEMA_HOME@
 ES_FEMA_LIBADD = @ES_FEMA_LIBADD@
 EXEEXT = @EXEEXT@
-FEMA_CPPFLAGS = @FEMA_CPPFLAGS@
-FEMA_INCLUDE_PATH = @FEMA_INCLUDE_PATH@
-FEMA_LIBADD = @FEMA_LIBADD@
-FEMA_LIB_PATH = @FEMA_LIB_PATH@
-FEMA_VER = @FEMA_VER@
 FGREP = @FGREP@
 GREP = @GREP@
 INSTALL = @INSTALL@
@@ -378,38 +372,31 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 AUTOMAKE_OPTIONS = foreign
 SUBDIRS = mdflow
-flash_SOURCES = \
-	FlashConfig.cc \
+flash_tcp_SOURCES = \
+	FlashTCPConfig.cc \
 	MDServer.cc \
-	MultiMDServer.cc \
-	FlashServer.cc \
-	MData.cc \
 	Main.cc 
 
-flash_CPPFLAGS = -I$(top_srcdir) \
+flash_tcp_CPPFLAGS = -I$(top_srcdir) \
 		$(BOOST_CPPFLAGS) \
 		$(SOIL_CPPFLAGS) \
 		$(ES_FEMA_CPPFLAGS)
 
-flash_LDADD = \
+flash_tcp_LDADD = \
 	$(BOOST_LIBADD) \
-	$(FEMA_LIBADD) \
 	$(SOIL_LIBADD) \
-	$(ES_FEMA_LIBADD)
+	$(ES_FEMA_LIBADD) \
+	../util/libflash.la
 
-flash_LDFLAGS = $(LIBADD_DL) -Wl,--no-as-needed -pthread
+flash_tcp_LDFLAGS = $(LIBADD_DL) -Wl,--no-as-needed -pthread
 
 # header files
-noinst_HEADERS = FlashLog.hh \
-		FlashConfig.hh \
-		MDServer.hh \
-		MultiMDServer.hh \
-		MData.hh \
-		FlashServer.hh
+noinst_HEADERS = FlashTCPConfig.hh \
+		MDServer.hh
 
-EXTRA_DIST = env.sh flash.cfg log.cfg
-flashdir = $(bindir)
-flash_DATA = env.sh flash.cfg log.cfg
+EXTRA_DIST = tcp_env.sh.example flash_tcp.cfg.example tcp_log.cfg.example
+flash_tcpdir = $(bindir)
+flash_tcp_DATA = $(EXTRA_DIST)
 all: all-recursive
 
 .SUFFIXES:
@@ -423,9 +410,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign src/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign tcp/Makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign src/Makefile
+	  $(AUTOMAKE) --foreign tcp/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -494,9 +481,9 @@ clean-binPROGRAMS:
 	echo " rm -f" $$list; \
 	rm -f $$list
 
-flash$(EXEEXT): $(flash_OBJECTS) $(flash_DEPENDENCIES) $(EXTRA_flash_DEPENDENCIES) 
-	@rm -f flash$(EXEEXT)
-	$(AM_V_CXXLD)$(flash_LINK) $(flash_OBJECTS) $(flash_LDADD) $(LIBS)
+flash_tcp$(EXEEXT): $(flash_tcp_OBJECTS) $(flash_tcp_DEPENDENCIES) $(EXTRA_flash_tcp_DEPENDENCIES) 
+	@rm -f flash_tcp$(EXEEXT)
+	$(AM_V_CXXLD)$(flash_tcp_LINK) $(flash_tcp_OBJECTS) $(flash_tcp_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -504,12 +491,9 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/flash-FlashConfig.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/flash-FlashServer.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/flash-MDServer.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/flash-MData.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/flash-Main.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/flash-MultiMDServer.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/flash_tcp-FlashTCPConfig.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/flash_tcp-MDServer.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/flash_tcp-Main.Po@am__quote@
 
 .cc.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -532,116 +516,74 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LTCXXCOMPILE) -c -o $@ $<
 
-flash-FlashConfig.o: FlashConfig.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(flash_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT flash-FlashConfig.o -MD -MP -MF $(DEPDIR)/flash-FlashConfig.Tpo -c -o flash-FlashConfig.o `test -f 'FlashConfig.cc' || echo '$(srcdir)/'`FlashConfig.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/flash-FlashConfig.Tpo $(DEPDIR)/flash-FlashConfig.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='FlashConfig.cc' object='flash-FlashConfig.o' libtool=no @AMDEPBACKSLASH@
+flash_tcp-FlashTCPConfig.o: FlashTCPConfig.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(flash_tcp_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT flash_tcp-FlashTCPConfig.o -MD -MP -MF $(DEPDIR)/flash_tcp-FlashTCPConfig.Tpo -c -o flash_tcp-FlashTCPConfig.o `test -f 'FlashTCPConfig.cc' || echo '$(srcdir)/'`FlashTCPConfig.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/flash_tcp-FlashTCPConfig.Tpo $(DEPDIR)/flash_tcp-FlashTCPConfig.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='FlashTCPConfig.cc' object='flash_tcp-FlashTCPConfig.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(flash_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o flash-FlashConfig.o `test -f 'FlashConfig.cc' || echo '$(srcdir)/'`FlashConfig.cc
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(flash_tcp_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o flash_tcp-FlashTCPConfig.o `test -f 'FlashTCPConfig.cc' || echo '$(srcdir)/'`FlashTCPConfig.cc
 
-flash-FlashConfig.obj: FlashConfig.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(flash_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT flash-FlashConfig.obj -MD -MP -MF $(DEPDIR)/flash-FlashConfig.Tpo -c -o flash-FlashConfig.obj `if test -f 'FlashConfig.cc'; then $(CYGPATH_W) 'FlashConfig.cc'; else $(CYGPATH_W) '$(srcdir)/FlashConfig.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/flash-FlashConfig.Tpo $(DEPDIR)/flash-FlashConfig.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='FlashConfig.cc' object='flash-FlashConfig.obj' libtool=no @AMDEPBACKSLASH@
+flash_tcp-FlashTCPConfig.obj: FlashTCPConfig.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(flash_tcp_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT flash_tcp-FlashTCPConfig.obj -MD -MP -MF $(DEPDIR)/flash_tcp-FlashTCPConfig.Tpo -c -o flash_tcp-FlashTCPConfig.obj `if test -f 'FlashTCPConfig.cc'; then $(CYGPATH_W) 'FlashTCPConfig.cc'; else $(CYGPATH_W) '$(srcdir)/FlashTCPConfig.cc'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/flash_tcp-FlashTCPConfig.Tpo $(DEPDIR)/flash_tcp-FlashTCPConfig.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='FlashTCPConfig.cc' object='flash_tcp-FlashTCPConfig.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(flash_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o flash-FlashConfig.obj `if test -f 'FlashConfig.cc'; then $(CYGPATH_W) 'FlashConfig.cc'; else $(CYGPATH_W) '$(srcdir)/FlashConfig.cc'; fi`
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(flash_tcp_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o flash_tcp-FlashTCPConfig.obj `if test -f 'FlashTCPConfig.cc'; then $(CYGPATH_W) 'FlashTCPConfig.cc'; else $(CYGPATH_W) '$(srcdir)/FlashTCPConfig.cc'; fi`
 
-flash-MDServer.o: MDServer.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(flash_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT flash-MDServer.o -MD -MP -MF $(DEPDIR)/flash-MDServer.Tpo -c -o flash-MDServer.o `test -f 'MDServer.cc' || echo '$(srcdir)/'`MDServer.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/flash-MDServer.Tpo $(DEPDIR)/flash-MDServer.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='MDServer.cc' object='flash-MDServer.o' libtool=no @AMDEPBACKSLASH@
+flash_tcp-MDServer.o: MDServer.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(flash_tcp_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT flash_tcp-MDServer.o -MD -MP -MF $(DEPDIR)/flash_tcp-MDServer.Tpo -c -o flash_tcp-MDServer.o `test -f 'MDServer.cc' || echo '$(srcdir)/'`MDServer.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/flash_tcp-MDServer.Tpo $(DEPDIR)/flash_tcp-MDServer.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='MDServer.cc' object='flash_tcp-MDServer.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(flash_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o flash-MDServer.o `test -f 'MDServer.cc' || echo '$(srcdir)/'`MDServer.cc
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(flash_tcp_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o flash_tcp-MDServer.o `test -f 'MDServer.cc' || echo '$(srcdir)/'`MDServer.cc
 
-flash-MDServer.obj: MDServer.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(flash_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT flash-MDServer.obj -MD -MP -MF $(DEPDIR)/flash-MDServer.Tpo -c -o flash-MDServer.obj `if test -f 'MDServer.cc'; then $(CYGPATH_W) 'MDServer.cc'; else $(CYGPATH_W) '$(srcdir)/MDServer.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/flash-MDServer.Tpo $(DEPDIR)/flash-MDServer.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='MDServer.cc' object='flash-MDServer.obj' libtool=no @AMDEPBACKSLASH@
+flash_tcp-MDServer.obj: MDServer.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(flash_tcp_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT flash_tcp-MDServer.obj -MD -MP -MF $(DEPDIR)/flash_tcp-MDServer.Tpo -c -o flash_tcp-MDServer.obj `if test -f 'MDServer.cc'; then $(CYGPATH_W) 'MDServer.cc'; else $(CYGPATH_W) '$(srcdir)/MDServer.cc'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/flash_tcp-MDServer.Tpo $(DEPDIR)/flash_tcp-MDServer.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='MDServer.cc' object='flash_tcp-MDServer.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(flash_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o flash-MDServer.obj `if test -f 'MDServer.cc'; then $(CYGPATH_W) 'MDServer.cc'; else $(CYGPATH_W) '$(srcdir)/MDServer.cc'; fi`
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(flash_tcp_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o flash_tcp-MDServer.obj `if test -f 'MDServer.cc'; then $(CYGPATH_W) 'MDServer.cc'; else $(CYGPATH_W) '$(srcdir)/MDServer.cc'; fi`
 
-flash-MultiMDServer.o: MultiMDServer.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(flash_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT flash-MultiMDServer.o -MD -MP -MF $(DEPDIR)/flash-MultiMDServer.Tpo -c -o flash-MultiMDServer.o `test -f 'MultiMDServer.cc' || echo '$(srcdir)/'`MultiMDServer.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/flash-MultiMDServer.Tpo $(DEPDIR)/flash-MultiMDServer.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='MultiMDServer.cc' object='flash-MultiMDServer.o' libtool=no @AMDEPBACKSLASH@
+flash_tcp-Main.o: Main.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(flash_tcp_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT flash_tcp-Main.o -MD -MP -MF $(DEPDIR)/flash_tcp-Main.Tpo -c -o flash_tcp-Main.o `test -f 'Main.cc' || echo '$(srcdir)/'`Main.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/flash_tcp-Main.Tpo $(DEPDIR)/flash_tcp-Main.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='Main.cc' object='flash_tcp-Main.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(flash_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o flash-MultiMDServer.o `test -f 'MultiMDServer.cc' || echo '$(srcdir)/'`MultiMDServer.cc
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(flash_tcp_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o flash_tcp-Main.o `test -f 'Main.cc' || echo '$(srcdir)/'`Main.cc
 
-flash-MultiMDServer.obj: MultiMDServer.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(flash_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT flash-MultiMDServer.obj -MD -MP -MF $(DEPDIR)/flash-MultiMDServer.Tpo -c -o flash-MultiMDServer.obj `if test -f 'MultiMDServer.cc'; then $(CYGPATH_W) 'MultiMDServer.cc'; else $(CYGPATH_W) '$(srcdir)/MultiMDServer.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/flash-MultiMDServer.Tpo $(DEPDIR)/flash-MultiMDServer.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='MultiMDServer.cc' object='flash-MultiMDServer.obj' libtool=no @AMDEPBACKSLASH@
+flash_tcp-Main.obj: Main.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(flash_tcp_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT flash_tcp-Main.obj -MD -MP -MF $(DEPDIR)/flash_tcp-Main.Tpo -c -o flash_tcp-Main.obj `if test -f 'Main.cc'; then $(CYGPATH_W) 'Main.cc'; else $(CYGPATH_W) '$(srcdir)/Main.cc'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/flash_tcp-Main.Tpo $(DEPDIR)/flash_tcp-Main.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='Main.cc' object='flash_tcp-Main.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(flash_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o flash-MultiMDServer.obj `if test -f 'MultiMDServer.cc'; then $(CYGPATH_W) 'MultiMDServer.cc'; else $(CYGPATH_W) '$(srcdir)/MultiMDServer.cc'; fi`
-
-flash-FlashServer.o: FlashServer.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(flash_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT flash-FlashServer.o -MD -MP -MF $(DEPDIR)/flash-FlashServer.Tpo -c -o flash-FlashServer.o `test -f 'FlashServer.cc' || echo '$(srcdir)/'`FlashServer.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/flash-FlashServer.Tpo $(DEPDIR)/flash-FlashServer.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='FlashServer.cc' object='flash-FlashServer.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(flash_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o flash-FlashServer.o `test -f 'FlashServer.cc' || echo '$(srcdir)/'`FlashServer.cc
-
-flash-FlashServer.obj: FlashServer.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(flash_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT flash-FlashServer.obj -MD -MP -MF $(DEPDIR)/flash-FlashServer.Tpo -c -o flash-FlashServer.obj `if test -f 'FlashServer.cc'; then $(CYGPATH_W) 'FlashServer.cc'; else $(CYGPATH_W) '$(srcdir)/FlashServer.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/flash-FlashServer.Tpo $(DEPDIR)/flash-FlashServer.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='FlashServer.cc' object='flash-FlashServer.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(flash_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o flash-FlashServer.obj `if test -f 'FlashServer.cc'; then $(CYGPATH_W) 'FlashServer.cc'; else $(CYGPATH_W) '$(srcdir)/FlashServer.cc'; fi`
-
-flash-MData.o: MData.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(flash_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT flash-MData.o -MD -MP -MF $(DEPDIR)/flash-MData.Tpo -c -o flash-MData.o `test -f 'MData.cc' || echo '$(srcdir)/'`MData.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/flash-MData.Tpo $(DEPDIR)/flash-MData.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='MData.cc' object='flash-MData.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(flash_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o flash-MData.o `test -f 'MData.cc' || echo '$(srcdir)/'`MData.cc
-
-flash-MData.obj: MData.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(flash_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT flash-MData.obj -MD -MP -MF $(DEPDIR)/flash-MData.Tpo -c -o flash-MData.obj `if test -f 'MData.cc'; then $(CYGPATH_W) 'MData.cc'; else $(CYGPATH_W) '$(srcdir)/MData.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/flash-MData.Tpo $(DEPDIR)/flash-MData.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='MData.cc' object='flash-MData.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(flash_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o flash-MData.obj `if test -f 'MData.cc'; then $(CYGPATH_W) 'MData.cc'; else $(CYGPATH_W) '$(srcdir)/MData.cc'; fi`
-
-flash-Main.o: Main.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(flash_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT flash-Main.o -MD -MP -MF $(DEPDIR)/flash-Main.Tpo -c -o flash-Main.o `test -f 'Main.cc' || echo '$(srcdir)/'`Main.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/flash-Main.Tpo $(DEPDIR)/flash-Main.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='Main.cc' object='flash-Main.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(flash_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o flash-Main.o `test -f 'Main.cc' || echo '$(srcdir)/'`Main.cc
-
-flash-Main.obj: Main.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(flash_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT flash-Main.obj -MD -MP -MF $(DEPDIR)/flash-Main.Tpo -c -o flash-Main.obj `if test -f 'Main.cc'; then $(CYGPATH_W) 'Main.cc'; else $(CYGPATH_W) '$(srcdir)/Main.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/flash-Main.Tpo $(DEPDIR)/flash-Main.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='Main.cc' object='flash-Main.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(flash_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o flash-Main.obj `if test -f 'Main.cc'; then $(CYGPATH_W) 'Main.cc'; else $(CYGPATH_W) '$(srcdir)/Main.cc'; fi`
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(flash_tcp_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o flash_tcp-Main.obj `if test -f 'Main.cc'; then $(CYGPATH_W) 'Main.cc'; else $(CYGPATH_W) '$(srcdir)/Main.cc'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo
 
 clean-libtool:
 	-rm -rf .libs _libs
-install-flashDATA: $(flash_DATA)
+install-flash_tcpDATA: $(flash_tcp_DATA)
 	@$(NORMAL_INSTALL)
-	@list='$(flash_DATA)'; test -n "$(flashdir)" || list=; \
+	@list='$(flash_tcp_DATA)'; test -n "$(flash_tcpdir)" || list=; \
 	if test -n "$$list"; then \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(flashdir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(flashdir)" || exit 1; \
+	  echo " $(MKDIR_P) '$(DESTDIR)$(flash_tcpdir)'"; \
+	  $(MKDIR_P) "$(DESTDIR)$(flash_tcpdir)" || exit 1; \
 	fi; \
 	for p in $$list; do \
 	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
 	  echo "$$d$$p"; \
 	done | $(am__base_list) | \
 	while read files; do \
-	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(flashdir)'"; \
-	  $(INSTALL_DATA) $$files "$(DESTDIR)$(flashdir)" || exit $$?; \
+	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(flash_tcpdir)'"; \
+	  $(INSTALL_DATA) $$files "$(DESTDIR)$(flash_tcpdir)" || exit $$?; \
 	done
 
-uninstall-flashDATA:
+uninstall-flash_tcpDATA:
 	@$(NORMAL_UNINSTALL)
-	@list='$(flash_DATA)'; test -n "$(flashdir)" || list=; \
+	@list='$(flash_tcp_DATA)'; test -n "$(flash_tcpdir)" || list=; \
 	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
-	dir='$(DESTDIR)$(flashdir)'; $(am__uninstall_files_from_dir)
+	dir='$(DESTDIR)$(flash_tcpdir)'; $(am__uninstall_files_from_dir)
 
 # This directory's subdirectories are mostly independent; you can cd
 # into them and run 'make' without going through this Makefile.
@@ -802,7 +744,7 @@ check: check-recursive
 all-am: Makefile $(PROGRAMS) $(DATA) $(HEADERS)
 installdirs: installdirs-recursive
 installdirs-am:
-	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(flashdir)"; do \
+	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(flash_tcpdir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-recursive
@@ -857,7 +799,7 @@ info: info-recursive
 
 info-am:
 
-install-data-am: install-flashDATA
+install-data-am: install-flash_tcpDATA
 
 install-dvi: install-dvi-recursive
 
@@ -903,7 +845,7 @@ ps: ps-recursive
 
 ps-am:
 
-uninstall-am: uninstall-binPROGRAMS uninstall-flashDATA
+uninstall-am: uninstall-binPROGRAMS uninstall-flash_tcpDATA
 
 .MAKE: $(am__recursive_targets) install-am install-strip
 
@@ -913,15 +855,15 @@ uninstall-am: uninstall-binPROGRAMS uninstall-flashDATA
 	distclean-generic distclean-libtool distclean-tags distdir dvi \
 	dvi-am html html-am info info-am install install-am \
 	install-binPROGRAMS install-data install-data-am install-dvi \
-	install-dvi-am install-exec install-exec-am install-flashDATA \
-	install-html install-html-am install-info install-info-am \
-	install-man install-pdf install-pdf-am install-ps \
-	install-ps-am install-strip installcheck installcheck-am \
-	installdirs installdirs-am maintainer-clean \
-	maintainer-clean-generic mostlyclean mostlyclean-compile \
-	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
-	tags tags-am uninstall uninstall-am uninstall-binPROGRAMS \
-	uninstall-flashDATA
+	install-dvi-am install-exec install-exec-am \
+	install-flash_tcpDATA install-html install-html-am \
+	install-info install-info-am install-man install-pdf \
+	install-pdf-am install-ps install-ps-am install-strip \
+	installcheck installcheck-am installdirs installdirs-am \
+	maintainer-clean maintainer-clean-generic mostlyclean \
+	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
+	pdf pdf-am ps ps-am tags tags-am uninstall uninstall-am \
+	uninstall-binPROGRAMS uninstall-flash_tcpDATA
 
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
