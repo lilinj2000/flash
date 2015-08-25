@@ -30,7 +30,7 @@ noinst_HEADERS = FlashMultiConfig.hh \
 
 
 
-EXTRA_DIST = multi_env.sh.example flash_multi.cfg.example multi_log.cfg.example
+EXTRA_DIST = multi_env.sh.example multi.cfg.example multi_log.cfg.example
 
 flash_multidir = $(bindir)
 flash_multi_DATA = $(EXTRA_DIST)

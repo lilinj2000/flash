@@ -47,7 +47,7 @@ FlashConfig::FlashConfig(int argc, char* argv[])
   config->registerOptions( flash_multi_options_.get() );
   config->registerOptions( fema_multimd_options_.get() );
 
-  config->configFile() = "flash_multi.cfg";
+  config->configFile() = "multi.cfg";
   config->loadConfig(argc, argv);
   
   // init the log

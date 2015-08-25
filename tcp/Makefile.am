@@ -30,7 +30,7 @@ noinst_HEADERS = FlashTCPConfig.hh \
 
 
 
-EXTRA_DIST = tcp_env.sh.example flash_tcp.cfg.example tcp_log.cfg.example
+EXTRA_DIST = tcp_env.sh.example tcp.cfg.example tcp_log.cfg.example
 
 flash_tcpdir = $(bindir)
 flash_tcp_DATA = $(EXTRA_DIST)

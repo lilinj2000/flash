@@ -47,7 +47,7 @@ FlashConfig::FlashConfig(int argc, char* argv[])
   config->registerOptions( flash_tcp_options_.get() );
   config->registerOptions( fema_md_options_.get() );
 
-  config->configFile() = "flash_tcp.cfg";
+  config->configFile() = "tcp.cfg";
   config->loadConfig(argc, argv);
   
   // init the log

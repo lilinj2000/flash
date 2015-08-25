@@ -394,7 +394,7 @@ flash_multi_LDFLAGS = $(LIBADD_DL) -Wl,--no-as-needed -pthread
 noinst_HEADERS = FlashMultiConfig.hh \
 		MultiMDServer.hh
 
-EXTRA_DIST = multi_env.sh.example flash_multi.cfg.example multi_log.cfg.example
+EXTRA_DIST = multi_env.sh.example multi.cfg.example multi_log.cfg.example
 flash_multidir = $(bindir)
 flash_multi_DATA = $(EXTRA_DIST)
 all: all-recursive
