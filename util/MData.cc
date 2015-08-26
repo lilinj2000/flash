@@ -30,7 +30,7 @@ void MData::outDepthMarketData(const fema::DepthMarketData* data)
 
   bp::time_duration delay = data->time_stamp - start_time;
   
-  file_<<data->UpdateTime <<"\t" <<data->UpdateMillisec <<"\t"
+  file_<<data->UpdateTime <<"." <<std::setfill('0') <<std::setw(3) <<data->UpdateMillisec <<"\t"
        <<start_time <<"\t"
        <<data->time_stamp <<"\t"
        <<delay.total_microseconds() <<std::endl;
