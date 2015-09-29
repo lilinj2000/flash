@@ -40,15 +40,15 @@ class FlashConfig
     return flash_tcp_options_.get();
   }
 
-  soil::Options* femaMDOptions()
+  soil::Options* foalMDOptions()
   {
-    return fema_md_options_.get();
+    return foal_md_options_.get();
   }
 
  private:
   std::auto_ptr<FlashTCPOptions> flash_tcp_options_;
   
-  std::auto_ptr<soil::Options> fema_md_options_;
+  std::auto_ptr<soil::Options> foal_md_options_;
 
 };
 

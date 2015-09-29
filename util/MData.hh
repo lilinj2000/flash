@@ -1,10 +1,10 @@
-#ifndef MDATA_HH
-#define MDATA_HH
+#ifndef FLASH_MDATA_HH
+#define FLASH_MDATA_HH
 
 #include <string>
 #include <fstream>
 
-#include "fema/FemaDef.hh"
+#include "foal/FoalDef.hh"
 
 namespace flash
 {
@@ -16,7 +16,7 @@ class MData
 
   virtual ~MData();
 
-  void outDepthMarketData(const fema::DepthMarketData* data);
+  void outDepthMarketData(const foal::DepthMarketData* data);
 
  private:
   

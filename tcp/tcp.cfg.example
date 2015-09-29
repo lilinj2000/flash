@@ -7,7 +7,7 @@ tcp_md_file=tcp_md.data
 
 log_cfg=tcp_log.cfg
 
-[fema_md]
+[foal_md]
 flow_path = ./mdflow/
 front_address = tcp://180.169.101.189:7101
 broker_id = 0158

@@ -638,9 +638,9 @@ LTLIBOBJS
 LIB@&t@OBJS
 MULTI_FALSE
 MULTI_TRUE
-ES_FEMA_LIBADD
-ES_FEMA_CPPFLAGS
-ES_FEMA_HOME
+FOAL_LIBADD
+FOAL_CPPFLAGS
+FOAL_HOME
 SOIL_LIBADD
 SOIL_CPPFLAGS
 SOIL_HOME
@@ -784,7 +784,7 @@ with_sysroot
 enable_libtool_lock
 with_boost
 with_soil
-with_es_fema
+with_foal
 enable_multi
 '
       ac_precious_vars='build_alias
@@ -1441,7 +1441,7 @@ Optional Packages:
                         (or the compiler's sysroot if not specified).
   --with-boost            home path of the boost, defaults to @S|@home_3rd/boost
   --with-soil             home path of the soil, defaults to @S|@home_es/soil
-  --with-es-fema          home path of the es-fema, defaults to @S|@ES_FEMA_HOME
+  --with-foal             home path of the foal, defaults to @S|@FOAL_HOME
 
 Some influential environment variables:
   CXX         C++ compiler command
@@ -15146,19 +15146,19 @@ SOIL_LIBADD="$SOIL_HOME/lib/libsoil.la"
 
 
 
-ES_FEMA_HOME=$home_es/fema-v1_01
+FOAL_HOME=$home_es/foal-v1_01
 
-@%:@ Check whether --with-es-fema was given.
-if test "${with_es_fema+set}" = set; then :
-  withval=$with_es_fema; ES_FEMA_HOME="$withval"
+@%:@ Check whether --with-foal was given.
+if test "${with_foal+set}" = set; then :
+  withval=$with_foal; FOAL_HOME="$withval"
 else
-  ES_FEMA_HOME="$ES_FEMA_HOME"
+  FOAL_HOME="$FOAL_HOME"
 fi
 
 
 
-ES_FEMA_CPPFLAGS="-I$ES_FEMA_HOME/include"
-ES_FEMA_LIBADD="$ES_FEMA_HOME/lib/libfema.la"
+FOAL_CPPFLAGS="-I$FOAL_HOME/include"
+FOAL_LIBADD="$FOAL_HOME/lib/libfoal.la"
 
 
 

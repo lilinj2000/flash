@@ -1,14 +1,14 @@
 #ifndef FLASH_MDSERVER_HH
 #define FLASH_MDSERVER_HH
 
-#include "fema/MDService.hh"
+#include "foal/MDService.hh"
 
 namespace flash
 {
 
 class MData;
 
-class MDServer : public fema::MDServiceCallback
+class MDServer : public foal::MDServiceCallback
 {
  public:
   MDServer(soil::Options* options,
@@ -21,13 +21,13 @@ class MDServer : public fema::MDServiceCallback
 
   virtual void onRspUnsubMarketData(const std::string& instru, bool success);
 
-  virtual void onRtnMarketData(const fema::DepthMarketData* data);
+  virtual void onRtnMarketData(const foal::DepthMarketData* data);
 
   virtual void onRspError(int errord_id, const std::string& error_msg);
 
  private:
 
-  std::auto_ptr<fema::MDService> md_service_;
+  std::auto_ptr<foal::MDService> md_service_;
 
   std::auto_ptr<MData> md_file_;
 };

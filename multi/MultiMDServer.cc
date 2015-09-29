@@ -13,7 +13,7 @@ MultiMDServer::MultiMDServer(soil::Options* options,
 
   multimd_file_.reset( new MData(multimd_file) );
   
-  multimd_service_.reset( fema::MultiMDService::createService(options, this) );
+  multimd_service_.reset( foal::MultiMDService::createService(options, this) );
 
   multimd_service_->addFilter( instru );
 }
@@ -23,7 +23,7 @@ MultiMDServer::~MultiMDServer()
   FLASH_TRACE <<"MultiMDServer::~MultiMDServer()";
 }
 
-void MultiMDServer::onRtnMarketData(const fema::DepthMarketData* data)
+void MultiMDServer::onRtnMarketData(const foal::DepthMarketData* data)
 {
   FLASH_TRACE <<"MultiMDServer::onRtnMarketData()";
 

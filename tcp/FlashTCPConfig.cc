@@ -1,6 +1,6 @@
 #include "FlashTCPConfig.hh"
 #include "util/FlashLog.hh"
-#include "fema/MDService.hh"
+#include "foal/MDService.hh"
 
 #include <fstream>
 #include <iostream>
@@ -41,11 +41,11 @@ po::options_description* FlashTCPOptions::configOptions()
 FlashConfig::FlashConfig(int argc, char* argv[])
 {
   flash_tcp_options_.reset(new FlashTCPOptions());
-  fema_md_options_.reset( fema::MDService::createOptions() );
+  foal_md_options_.reset( foal::MDService::createOptions() );
       
   std::auto_ptr<soil::Config> config( soil::Config::create() );
   config->registerOptions( flash_tcp_options_.get() );
-  config->registerOptions( fema_md_options_.get() );
+  config->registerOptions( foal_md_options_.get() );
 
   config->configFile() = "tcp.cfg";
   config->loadConfig(argc, argv);

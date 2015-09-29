@@ -12,13 +12,13 @@ flash_multi_SOURCES = \
 flash_multi_CPPFLAGS = -I$(top_srcdir) \
 		$(BOOST_CPPFLAGS) \
 		$(SOIL_CPPFLAGS) \
-		$(ES_FEMA_CPPFLAGS)
+		$(FOAL_CPPFLAGS)
 
 
 flash_multi_LDADD = \
 	$(BOOST_LIBADD) \
 	$(SOIL_LIBADD) \
-	$(ES_FEMA_LIBADD) \
+	$(FOAL_LIBADD) \
 	../util/libflash.la
 
 

@@ -12,7 +12,7 @@ int main(int argc, char* argv[])
   flash::FlashMultiOptions* multi_options = config->flashMultiOptions();
 
   std::auto_ptr<flash::MultiMDServer> server;
-  server.reset(new flash::MultiMDServer(config->femaMultiMDOptions(),
+  server.reset(new flash::MultiMDServer(config->foalMultiMDOptions(),
                             multi_options->instrument_id,
                             multi_options->multi_md_file));
   

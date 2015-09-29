@@ -1,6 +1,6 @@
 #include "FlashMultiConfig.hh"
 #include "util/FlashLog.hh"
-#include "fema/MultiMDService.hh"
+#include "foal/MultiMDService.hh"
 
 #include <fstream>
 #include <iostream>
@@ -41,11 +41,11 @@ po::options_description* FlashMultiOptions::configOptions()
 FlashConfig::FlashConfig(int argc, char* argv[])
 {
   flash_multi_options_.reset(new FlashMultiOptions());
-  fema_multimd_options_.reset( fema::MultiMDService::createOptions() );
+  foal_multimd_options_.reset( foal::MultiMDService::createOptions() );
       
   std::auto_ptr<soil::Config> config( soil::Config::create() );
   config->registerOptions( flash_multi_options_.get() );
-  config->registerOptions( fema_multimd_options_.get() );
+  config->registerOptions( foal_multimd_options_.get() );
 
   config->configFile() = "multi.cfg";
   config->loadConfig(argc, argv);

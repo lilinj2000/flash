@@ -18,7 +18,7 @@ MData::~MData()
   file_.close();
 }
 
-void MData::outDepthMarketData(const fema::DepthMarketData* data)
+void MData::outDepthMarketData(const foal::DepthMarketData* data)
 {
 
   namespace bg=boost::gregorian;

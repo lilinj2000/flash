@@ -69,19 +69,19 @@ SOIL_LIBADD="$SOIL_HOME/lib/libsoil.la"
 AC_SUBST(SOIL_CPPFLAGS)
 AC_SUBST(SOIL_LIBADD)
 
-dnl es-fema lib
-ES_FEMA_HOME=$home_es/fema-v1_01
-AC_ARG_WITH([es-fema],
-    [AS_HELP_STRING([--with-es-fema],
-        [home path of the es-fema, defaults to $ES_FEMA_HOME])],
-    [ES_FEMA_HOME="$withval"],
-    [ES_FEMA_HOME="$ES_FEMA_HOME"])
-AC_SUBST([ES_FEMA_HOME])
+dnl foal lib
+FOAL_HOME=$home_es/foal-v1_01
+AC_ARG_WITH([foal], 
+    [AS_HELP_STRING([--with-foal],
+        [home path of the foal, defaults to $FOAL_HOME])],
+    [FOAL_HOME="$withval"],
+    [FOAL_HOME="$FOAL_HOME"])
+AC_SUBST([FOAL_HOME])
 
-ES_FEMA_CPPFLAGS="-I$ES_FEMA_HOME/include"
-ES_FEMA_LIBADD="$ES_FEMA_HOME/lib/libfema.la"
-AC_SUBST(ES_FEMA_CPPFLAGS)
-AC_SUBST(ES_FEMA_LIBADD)
+FOAL_CPPFLAGS="-I$FOAL_HOME/include"
+FOAL_LIBADD="$FOAL_HOME/lib/libfoal.la"
+AC_SUBST(FOAL_CPPFLAGS)
+AC_SUBST(FOAL_LIBADD)
 
 AC_ARG_ENABLE([multi],
     [AS_HELP_STRING([--enable-multi],

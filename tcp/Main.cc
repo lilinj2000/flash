@@ -12,7 +12,7 @@ int main(int argc, char* argv[])
   flash::FlashTCPOptions* tcp_options = config->flashTCPOptions();
 
   std::auto_ptr<flash::MDServer> server;
-  server.reset(new flash::MDServer(config->femaMDOptions(),
+  server.reset(new flash::MDServer(config->foalMDOptions(),
                             tcp_options->instrument_id,
                             tcp_options->tcp_md_file));
   

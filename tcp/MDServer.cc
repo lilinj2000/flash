@@ -13,9 +13,9 @@ MDServer::MDServer(soil::Options* options,
 
   md_file_.reset( new MData(md_file) );
   
-  md_service_.reset( fema::MDService::createService(options, this) );
+  md_service_.reset( foal::MDService::createService(options, this) );
 
-  fema::InstrumentSet instrus;
+  foal::InstrumentSet instrus;
   instrus.insert( instru );
   md_service_->subMarketData( instrus );
 }
@@ -35,7 +35,7 @@ void MDServer::onRspUnsubMarketData(const std::string& instru, bool success)
   FLASH_TRACE <<"MDServer::onRspUnsubMarketData()";
 }
 
-void MDServer::onRtnMarketData(const fema::DepthMarketData* data)
+void MDServer::onRtnMarketData(const foal::DepthMarketData* data)
 {
   FLASH_TRACE <<"MDServer::onRtnMarketData()";
 

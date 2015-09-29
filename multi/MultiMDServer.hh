@@ -1,14 +1,14 @@
 #ifndef FLASH_MULTI_MDSERVER_HH
 #define FLASH_MULTI_MDSERVER_HH
 
-#include "fema/MultiMDService.hh"
+#include "foal/MultiMDService.hh"
 
 namespace flash
 {
 
 class MData;
 
-class MultiMDServer : public fema::MultiMDServiceCallback
+class MultiMDServer : public foal::MultiMDServiceCallback
 {
  public:
   MultiMDServer(soil::Options* options,
@@ -17,13 +17,13 @@ class MultiMDServer : public fema::MultiMDServiceCallback
 
   virtual ~MultiMDServer();
   
-  virtual void onRtnMarketData(const fema::DepthMarketData* data);
+  virtual void onRtnMarketData(const foal::DepthMarketData* data);
 
   virtual void onRspError(int errord_id, const std::string& error_msg);
 
  private:
 
-  std::auto_ptr<fema::MultiMDService> multimd_service_;
+  std::auto_ptr<foal::MultiMDService> multimd_service_;
 
   std::auto_ptr<MData> multimd_file_;
 };

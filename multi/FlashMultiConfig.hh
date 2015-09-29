@@ -40,9 +40,9 @@ class FlashConfig
     return flash_multi_options_.get();
   }
 
-  soil::Options* femaMultiMDOptions()
+  soil::Options* foalMultiMDOptions()
   {
-    return fema_multimd_options_.get();
+    return foal_multimd_options_.get();
   }
 
  private:
