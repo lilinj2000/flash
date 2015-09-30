@@ -636,6 +636,9 @@ ac_subst_vars='am__EXEEXT_FALSE
 am__EXEEXT_TRUE
 LTLIBOBJS
 LIB@&t@OBJS
+AIR_LIBADD
+AIR_CPPFLAGS
+AIR_HOME
 MULTI_FALSE
 MULTI_TRUE
 FOAL_LIBADD
@@ -786,6 +789,7 @@ with_boost
 with_soil
 with_foal
 enable_multi
+with_air
 '
       ac_precious_vars='build_alias
 host_alias
@@ -1442,6 +1446,7 @@ Optional Packages:
   --with-boost            home path of the boost, defaults to @S|@home_3rd/boost
   --with-soil             home path of the soil, defaults to @S|@home_es/soil
   --with-foal             home path of the foal, defaults to @S|@FOAL_HOME
+  --with-air              home path of the air, defaults to @S|@home_es/air
 
 Some influential environment variables:
   CXX         C++ compiler command
@@ -15180,6 +15185,20 @@ else
   MULTI_TRUE='#'
   MULTI_FALSE=
 fi
+
+
+
+@%:@ Check whether --with-air was given.
+if test "${with_air+set}" = set; then :
+  withval=$with_air; AIR_HOME="$withval"
+else
+  AIR_HOME="$home_es/air"
+fi
+
+
+
+AIR_CPPFLAGS="-I$AIR_HOME/include"
+AIR_LIBADD="$AIR_HOME/lib/libair.la"
 
 
 

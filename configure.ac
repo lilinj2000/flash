@@ -94,6 +94,18 @@ AC_ARG_ENABLE([multi],
     [multi=false])
 AM_CONDITIONAL([MULTI], [test x$multi = xtrue])
 
+dnl air lib
+AC_ARG_WITH([air],
+    [AS_HELP_STRING([--with-air],
+        [home path of the air, defaults to $home_es/air])],
+    [AIR_HOME="$withval"],
+    [AIR_HOME="$home_es/air"])
+AC_SUBST([AIR_HOME])
+
+AIR_CPPFLAGS="-I$AIR_HOME/include"
+AIR_LIBADD="$AIR_HOME/lib/libair.la"
+AC_SUBST(AIR_CPPFLAGS)
+AC_SUBST(AIR_LIBADD)
 
 
 AC_OUTPUT([

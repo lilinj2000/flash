@@ -12,14 +12,15 @@ flash_multi_SOURCES = \
 flash_multi_CPPFLAGS = -I$(top_srcdir) \
 		$(BOOST_CPPFLAGS) \
 		$(SOIL_CPPFLAGS) \
-		$(FOAL_CPPFLAGS)
+		$(FOAL_CPPFLAGS) \
+		$(AIR_CPPFLAGS)
 
 
 flash_multi_LDADD = \
 	$(BOOST_LIBADD) \
 	$(SOIL_LIBADD) \
 	$(FOAL_LIBADD) \
-	../util/libflash.la
+	$(AIR_LIBADD)
 
 
 flash_multi_LDFLAGS = $(LIBADD_DL) -Wl,--no-as-needed -pthread
@@ -27,7 +28,6 @@ flash_multi_LDFLAGS = $(LIBADD_DL) -Wl,--no-as-needed -pthread
 # header files
 noinst_HEADERS = FlashMultiConfig.hh \
 		MultiMDServer.hh
-
 
 
 EXTRA_DIST = multi_env.sh.example multi.cfg.example multi_log.cfg.example

@@ -48,7 +48,7 @@ class FlashConfig
  private:
   std::auto_ptr<FlashMultiOptions> flash_multi_options_;
   
-  std::auto_ptr<soil::Options> fema_multimd_options_;  
+  std::auto_ptr<soil::Options> foal_multimd_options_;  
 
 };
 

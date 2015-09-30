@@ -1,6 +1,5 @@
 #include "MDServer.hh"
 #include "util/FlashLog.hh"
-#include "util/MData.hh"
 
 namespace flash
 {
@@ -11,7 +10,7 @@ MDServer::MDServer(soil::Options* options,
 {
   FLASH_TRACE <<"MDServer::MDServer()";
 
-  md_file_.reset( new MData(md_file) );
+  md_file_.reset( new air::MData(md_file) );
   
   md_service_.reset( foal::MDService::createService(options, this) );
 
@@ -39,9 +38,8 @@ void MDServer::onRtnMarketData(const foal::DepthMarketData* data)
 {
   FLASH_TRACE <<"MDServer::onRtnMarketData()";
 
-  FLASH_PDU <<*data;
-
-  md_file_->outDepthMarketData( data );
+  md_file_->pushMData( data->InstrumentID, data->UpdateTime,
+                       data->UpdateMillisec );
 }
 
 void MDServer::onRspError(int errord_id, const std::string& error_msg)

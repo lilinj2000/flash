@@ -12,14 +12,15 @@ flash_tcp_SOURCES = \
 flash_tcp_CPPFLAGS = -I$(top_srcdir) \
 		$(BOOST_CPPFLAGS) \
 		$(SOIL_CPPFLAGS) \
-		$(FOAL_CPPFLAGS)
+		$(FOAL_CPPFLAGS) \
+		$(AIR_CPPFLAGS)
 
 
 flash_tcp_LDADD = \
 	$(BOOST_LIBADD) \
 	$(SOIL_LIBADD) \
 	$(FOAL_LIBADD) \
-	../util/libflash.la
+	$(AIR_LIBADD)
 
 
 flash_tcp_LDFLAGS = $(LIBADD_DL) -Wl,--no-as-needed -pthread
@@ -27,7 +28,6 @@ flash_tcp_LDFLAGS = $(LIBADD_DL) -Wl,--no-as-needed -pthread
 # header files
 noinst_HEADERS = FlashTCPConfig.hh \
 		MDServer.hh
-
 
 
 EXTRA_DIST = tcp_env.sh.example tcp.cfg.example tcp_log.cfg.example
