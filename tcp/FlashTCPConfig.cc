@@ -20,6 +20,8 @@ FlashTCPOptions::FlashTCPOptions():
        "instrument id")
       ("flash.tcp_md_file", po::value<std::string>(&tcp_md_file), 
        "tcp md file")
+      ("flash.speed_md_file", po::value<std::string>(&speed_md_file), 
+       "speed md file")
 
       ("flash.log_cfg", po::value<std::string>(&log_cfg), 
        "log config file")

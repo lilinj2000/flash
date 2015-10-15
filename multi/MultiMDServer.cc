@@ -1,16 +1,28 @@
 #include "MultiMDServer.hh"
 #include "util/FlashLog.hh"
+#include "util/Util.hh"
 
 namespace flash
 {
 
 MultiMDServer::MultiMDServer(soil::Options* options,
                              const std::string& instru,
-                             const std::string& multimd_file)
+                             const std::string& multi_md_file,
+                             const std::string& speed_md_file)
 {
   FLASH_TRACE <<"MultiMDServer::MultiMDServer()";
 
-  multimd_file_.reset( new air::MData(multimd_file, instru) );
+  util_.reset( new Util() );
+
+  if( !multi_md_file.empty() )
+  {
+    multi_md_file_.reset( air::MData::create(air::MData::CFFEX_MDATA, multi_md_file, instru) );
+  }
+
+  if( !speed_md_file.empty() )
+  {
+    speed_md_file_.reset( air::MData::create(air::MData::SPEED_MDATA, speed_md_file, instru) );
+  }
   
   multimd_service_.reset( foal::MultiMDService::createService(options, this) );
 
@@ -25,11 +37,16 @@ void MultiMDServer::onRtnMarketData(const foal::DepthMarketData* data)
 {
   FLASH_TRACE <<"MultiMDServer::onRtnMarketData()";
 
-  // FLASH_PDU <<*data;
+  if( speed_md_file_.get() )
+  {
+    speed_md_file_->pushMData( util_->toSpeedMDataField(data) );
+  }
 
-  multimd_file_->pushMData( data->InstrumentID,
-                            data->UpdateTime,
-                            data->UpdateMillisec );
+  if( multi_md_file_.get() )
+  {
+    multi_md_file_->pushMData( util_->toCffexMDataField(data) );
+  }
+
 }
 
 void MultiMDServer::onRspError(int errord_id, const std::string& error_msg)

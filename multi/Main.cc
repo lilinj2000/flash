@@ -13,8 +13,9 @@ int main(int argc, char* argv[])
 
   std::auto_ptr<flash::MultiMDServer> server;
   server.reset(new flash::MultiMDServer(config->foalMultiMDOptions(),
-                            multi_options->instrument_id,
-                            multi_options->multi_md_file));
+                                        multi_options->instrument_id,
+                                        multi_options->multi_md_file,
+                                        multi_options->speed_md_file));
   
   std::auto_ptr<soil::Condition> cond;
   cond.reset( soil::Condition::create() );

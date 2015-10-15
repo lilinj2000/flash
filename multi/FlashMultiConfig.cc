@@ -20,6 +20,8 @@ FlashMultiOptions::FlashMultiOptions():
        "instrument id")
       ("flash.multi_md_file", po::value<std::string>(&multi_md_file), 
        "multi md file")
+      ("flash.speed_md_file", po::value<std::string>(&speed_md_file), 
+       "speed md file")
 
       ("flash.log_cfg", po::value<std::string>(&log_cfg), 
        "log config file")

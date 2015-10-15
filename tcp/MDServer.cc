@@ -1,16 +1,24 @@
 #include "MDServer.hh"
 #include "util/FlashLog.hh"
+#include "util/Util.hh"
 
 namespace flash
 {
 
 MDServer::MDServer(soil::Options* options,
                    const std::string& instru,
-                   const std::string& md_file)
+                   const std::string& md_file,
+                   const std::string& speed_file)
 {
   FLASH_TRACE <<"MDServer::MDServer()";
 
-  md_file_.reset( new air::MData(md_file) );
+  util_.reset( new Util() );
+  
+  if( !md_file.empty() )
+    md_file_.reset( air::MData::create(air::MData::CFFEX_MDATA, md_file) );
+
+  if( !speed_file.empty() )
+    speed_file_.reset( air::MData::create(air::MData::SPEED_MDATA, speed_file) );
   
   md_service_.reset( foal::MDService::createService(options, this) );
 
@@ -38,8 +46,16 @@ void MDServer::onRtnMarketData(const foal::DepthMarketData* data)
 {
   FLASH_TRACE <<"MDServer::onRtnMarketData()";
 
-  md_file_->pushMData( data->InstrumentID, data->UpdateTime,
-                       data->UpdateMillisec );
+  if( speed_file_.get() )
+  {
+    speed_file_->pushMData( util_->toSpeedMDataField(data) );
+  }
+
+  if( md_file_.get() )
+  {
+    md_file_->pushMData( util_->toCffexMDataField(data) );
+  }
+
 }
 
 void MDServer::onRspError(int errord_id, const std::string& error_msg)

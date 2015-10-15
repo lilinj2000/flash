@@ -7,14 +7,15 @@
 namespace flash
 {
 
-class MData;
+class Util;
 
 class MDServer : public foal::MDServiceCallback
 {
  public:
   MDServer(soil::Options* options,
            const std::string& instru,
-           const std::string& md_file);
+           const std::string& md_file,
+           const std::string& speed_file);
 
   virtual ~MDServer();
   
@@ -31,6 +32,9 @@ class MDServer : public foal::MDServiceCallback
   std::auto_ptr<foal::MDService> md_service_;
 
   std::auto_ptr<air::MData> md_file_;
+  std::auto_ptr<air::MData> speed_file_;
+
+  std::auto_ptr<Util> util_;
 };
 
 };

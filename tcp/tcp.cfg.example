@@ -1,9 +1,10 @@
 [flash]
 # investor_id=03127
 # investor_id = 04452
-instrument_id=IF1509
+instrument_id=IF1511
 
 tcp_md_file=tcp_md.data
+speed_md_file=speed_md.data
 
 log_cfg=tcp_log.cfg
 

@@ -4,6 +4,7 @@
 instrument_id=IF1509
 
 multi_md_file=multi_md.data
+speed_md_file=speed_md.data
 
 log_cfg=multi_log.cfg
 

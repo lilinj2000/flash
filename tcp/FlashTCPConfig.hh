@@ -22,6 +22,7 @@ class FlashTCPOptions : public soil::Options
 
   std::string instrument_id;
   std::string tcp_md_file;
+  std::string speed_md_file;
   std::string log_cfg;
 
  private:

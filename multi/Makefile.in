@@ -98,7 +98,8 @@ am_flash_multi_OBJECTS = flash_multi-FlashMultiConfig.$(OBJEXT) \
 flash_multi_OBJECTS = $(am_flash_multi_OBJECTS)
 am__DEPENDENCIES_1 =
 flash_multi_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
-	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+	../util/.libs/libutil.a
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
@@ -390,7 +391,8 @@ flash_multi_LDADD = \
 	$(BOOST_LIBADD) \
 	$(SOIL_LIBADD) \
 	$(FOAL_LIBADD) \
-	$(AIR_LIBADD)
+	$(AIR_LIBADD) \
+	../util/.libs/libutil.a
 
 flash_multi_LDFLAGS = $(LIBADD_DL) -Wl,--no-as-needed -pthread
 

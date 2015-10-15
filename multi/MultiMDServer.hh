@@ -7,12 +7,15 @@
 namespace flash
 {
 
+class Util;
+
 class MultiMDServer : public foal::MultiMDServiceCallback
 {
  public:
   MultiMDServer(soil::Options* options,
                 const std::string& instru,
-                const std::string& multimd_file);
+                const std::string& multi_md_file,
+                const std::string& speed_md_file);
 
   virtual ~MultiMDServer();
   
@@ -24,7 +27,9 @@ class MultiMDServer : public foal::MultiMDServiceCallback
 
   std::auto_ptr<foal::MultiMDService> multimd_service_;
 
-  std::auto_ptr<air::MData> multimd_file_;
+  std::auto_ptr<air::MData> multi_md_file_;
+  std::auto_ptr<air::MData> speed_md_file_;
+  std::auto_ptr<Util> util_;
 };
 
 };

@@ -20,7 +20,9 @@ flash_multi_LDADD = \
 	$(BOOST_LIBADD) \
 	$(SOIL_LIBADD) \
 	$(FOAL_LIBADD) \
-	$(AIR_LIBADD)
+	$(AIR_LIBADD) \
+	../util/.libs/libutil.a
+
 
 
 flash_multi_LDFLAGS = $(LIBADD_DL) -Wl,--no-as-needed -pthread

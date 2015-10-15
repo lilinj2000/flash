@@ -20,7 +20,8 @@ flash_tcp_LDADD = \
 	$(BOOST_LIBADD) \
 	$(SOIL_LIBADD) \
 	$(FOAL_LIBADD) \
-	$(AIR_LIBADD)
+	$(AIR_LIBADD) \
+	../util/.libs/libutil.a
 
 
 flash_tcp_LDFLAGS = $(LIBADD_DL) -Wl,--no-as-needed -pthread
