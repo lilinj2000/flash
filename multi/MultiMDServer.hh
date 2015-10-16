@@ -2,7 +2,7 @@
 #define FLASH_MULTI_MDSERVER_HH
 
 #include "foal/MultiMDService.hh"
-#include "air/MData.hh"
+#include "air/MDataFile.hh"
 
 namespace flash
 {
@@ -27,8 +27,8 @@ class MultiMDServer : public foal::MultiMDServiceCallback
 
   std::auto_ptr<foal::MultiMDService> multimd_service_;
 
-  std::auto_ptr<air::MData> multi_md_file_;
-  std::auto_ptr<air::MData> speed_md_file_;
+  std::auto_ptr<air::MDataFile> multi_md_file_;
+  std::auto_ptr<air::MDataFile> speed_md_file_;
   std::auto_ptr<Util> util_;
 };
 

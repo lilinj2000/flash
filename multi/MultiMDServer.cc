@@ -16,12 +16,12 @@ MultiMDServer::MultiMDServer(soil::Options* options,
 
   if( !multi_md_file.empty() )
   {
-    multi_md_file_.reset( air::MData::create(air::MData::CFFEX_MDATA, multi_md_file, instru) );
+    multi_md_file_.reset( new air::MDataFile(multi_md_file, instru) );
   }
 
   if( !speed_md_file.empty() )
   {
-    speed_md_file_.reset( air::MData::create(air::MData::SPEED_MDATA, speed_md_file, instru) );
+    speed_md_file_.reset( new air::MDataFile(speed_md_file, instru) );
   }
   
   multimd_service_.reset( foal::MultiMDService::createService(options, this) );
@@ -39,12 +39,12 @@ void MultiMDServer::onRtnMarketData(const foal::DepthMarketData* data)
 
   if( speed_md_file_.get() )
   {
-    speed_md_file_->pushMData( util_->toSpeedMDataField(data) );
+    speed_md_file_->putData( util_->toSpeedMData(data) );
   }
 
   if( multi_md_file_.get() )
   {
-    multi_md_file_->pushMData( util_->toCffexMDataField(data) );
+    multi_md_file_->putData( util_->toCffexMData(data) );
   }
 
 }

@@ -3,9 +3,9 @@
 namespace flash
 {
 
-air::SpeedMDataField* Util::toSpeedMDataField(const foal::DepthMarketData* data)
+air::SpeedMData* Util::toSpeedMData(const foal::DepthMarketData* data)
 {
-  std::auto_ptr<air::SpeedMDataField> speed_data(new air::SpeedMDataField());
+  std::auto_ptr<air::SpeedMData> speed_data(new air::SpeedMData());
   
   speed_data->instru = data->InstrumentID;
   speed_data->update_time = data->UpdateTime;
@@ -16,9 +16,9 @@ air::SpeedMDataField* Util::toSpeedMDataField(const foal::DepthMarketData* data)
 }
 
 
-air::CffexMDataField* Util::toCffexMDataField(const foal::DepthMarketData* data)
+air::CffexMData* Util::toCffexMData(const foal::DepthMarketData* data)
 {
-  std::auto_ptr<air::CffexMDataField> cffex_data(new air::CffexMDataField());
+  std::auto_ptr<air::CffexMData> cffex_data(new air::CffexMData());
 
   cffex_data->TradingDay = data->TradingDay;
   cffex_data->SettlementGroupID = data->SettlementGroupID;

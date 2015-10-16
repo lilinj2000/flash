@@ -15,10 +15,10 @@ MDServer::MDServer(soil::Options* options,
   util_.reset( new Util() );
   
   if( !md_file.empty() )
-    md_file_.reset( air::MData::create(air::MData::CFFEX_MDATA, md_file) );
+    md_file_.reset( new air::MDataFile(md_file) );
 
   if( !speed_file.empty() )
-    speed_file_.reset( air::MData::create(air::MData::SPEED_MDATA, speed_file) );
+    speed_file_.reset( new air::MDataFile(speed_file) );
   
   md_service_.reset( foal::MDService::createService(options, this) );
 
@@ -48,12 +48,12 @@ void MDServer::onRtnMarketData(const foal::DepthMarketData* data)
 
   if( speed_file_.get() )
   {
-    speed_file_->pushMData( util_->toSpeedMDataField(data) );
+    speed_file_->putData( util_->toSpeedMData(data) );
   }
 
   if( md_file_.get() )
   {
-    md_file_->pushMData( util_->toCffexMDataField(data) );
+    md_file_->putData( util_->toCffexMData(data) );
   }
 
 }
