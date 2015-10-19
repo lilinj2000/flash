@@ -15,8 +15,7 @@ libutil_la_LIBADD = $(BOOST_LIBADD) \
 
 
 libutil_la_LDFLAGS = \
-	-no-undefined -version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) \
-	-release $(LT_RELEASE) 
+	-no-undefined  
 
 # header files
 noinst_HEADERS = FlashLog.hh Util.hh
