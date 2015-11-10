@@ -5,7 +5,7 @@ namespace flash
 
 air::SpeedMData* Util::toSpeedMData(const foal::DepthMarketData* data)
 {
-  std::auto_ptr<air::SpeedMData> speed_data(new air::SpeedMData());
+  std::unique_ptr<air::SpeedMData> speed_data(new air::SpeedMData());
   
   speed_data->instru = data->InstrumentID;
   speed_data->update_time = data->UpdateTime;
@@ -18,7 +18,7 @@ air::SpeedMData* Util::toSpeedMData(const foal::DepthMarketData* data)
 
 air::CffexMData* Util::toCffexMData(const foal::DepthMarketData* data)
 {
-  std::auto_ptr<air::CffexMData> cffex_data(new air::CffexMData());
+  std::unique_ptr<air::CffexMData> cffex_data(new air::CffexMData());
 
   cffex_data->TradingDay = data->TradingDay;
   cffex_data->SettlementGroupID = data->SettlementGroupID;

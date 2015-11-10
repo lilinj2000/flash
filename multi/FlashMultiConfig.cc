@@ -45,7 +45,7 @@ FlashConfig::FlashConfig(int argc, char* argv[])
   flash_multi_options_.reset(new FlashMultiOptions());
   foal_multimd_options_.reset( foal::MultiMDService::createOptions() );
       
-  std::auto_ptr<soil::Config> config( soil::Config::create() );
+  std::unique_ptr<soil::Config> config( soil::Config::create() );
   config->registerOptions( flash_multi_options_.get() );
   config->registerOptions( foal_multimd_options_.get() );
 

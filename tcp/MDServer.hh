@@ -29,12 +29,12 @@ class MDServer : public foal::MDServiceCallback
 
  private:
 
-  std::auto_ptr<foal::MDService> md_service_;
+  std::unique_ptr<foal::MDService> md_service_;
 
-  std::auto_ptr<air::MDataFile> md_file_;
-  std::auto_ptr<air::MDataFile> speed_file_;
+  std::unique_ptr<air::MDataFile> md_file_;
+  std::unique_ptr<air::MDataFile> speed_file_;
 
-  std::auto_ptr<Util> util_;
+  std::unique_ptr<Util> util_;
 };
 
 };

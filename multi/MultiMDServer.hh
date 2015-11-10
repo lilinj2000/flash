@@ -25,11 +25,11 @@ class MultiMDServer : public foal::MultiMDServiceCallback
 
  private:
 
-  std::auto_ptr<foal::MultiMDService> multimd_service_;
+  std::unique_ptr<foal::MultiMDService> multimd_service_;
 
-  std::auto_ptr<air::MDataFile> multi_md_file_;
-  std::auto_ptr<air::MDataFile> speed_md_file_;
-  std::auto_ptr<Util> util_;
+  std::unique_ptr<air::MDataFile> multi_md_file_;
+  std::unique_ptr<air::MDataFile> speed_md_file_;
+  std::unique_ptr<Util> util_;
 };
 
 };

@@ -45,7 +45,7 @@ FlashConfig::FlashConfig(int argc, char* argv[])
   flash_tcp_options_.reset(new FlashTCPOptions());
   foal_md_options_.reset( foal::MDService::createOptions() );
       
-  std::auto_ptr<soil::Config> config( soil::Config::create() );
+  std::unique_ptr<soil::Config> config( soil::Config::create() );
   config->registerOptions( flash_tcp_options_.get() );
   config->registerOptions( foal_md_options_.get() );
 

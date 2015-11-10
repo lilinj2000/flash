@@ -47,9 +47,9 @@ class FlashConfig
   }
 
  private:
-  std::auto_ptr<FlashTCPOptions> flash_tcp_options_;
+  std::unique_ptr<FlashTCPOptions> flash_tcp_options_;
   
-  std::auto_ptr<soil::Options> foal_md_options_;
+  std::unique_ptr<soil::Options> foal_md_options_;
 
 };
 
